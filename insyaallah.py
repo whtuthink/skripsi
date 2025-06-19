@@ -17,6 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import cross_val_score
+import io
                     
 # Set page config
 st.set_page_config(layout="wide", page_title="Clustering Sampang")
@@ -104,7 +105,7 @@ st.markdown("""
     </style>
 
     <h1 style='text-align: center; color: #2c3e50;'>
-        OPTIMALISASI CLUSTER UMKM DI KECAMATAN SAMPANG DENGAN METODE FUZZY K-MEDOIDS TYPE-2
+        OPTIMALISASI KLASTER UMKM DI KECAMATAN SAMPANG DENGAN METODE FUZZY K-MEDOIDS TYPE-2
     </h1>
     <p style='text-align: center; color: #95a5a6;'>Copyright © 2025 Muhammad Iqbal Firmansyah - iqbalcode.nt@gmail.com</p>
     <hr style='border:1px solid #bdc3c7'>
@@ -237,33 +238,36 @@ with col2:
         # Subheader Permasalahan
         st.markdown('<div class="custom-subheader">Permasalahan</div>', unsafe_allow_html=True)
         st.markdown("""
-        UMKM di Kecamatan Sampang menghadapi berbagai tantangan seperti keterbatasan akses permodalan, kesulitan dalam mengakses informasi pasar, serta adaptasi digital yang belum optimal. Pandemi COVID-19 semakin memperburuk situasi dengan penurunan pendapatan dan gangguan pada rantai pasokan. Oleh karena itu, diperlukan pemetaan UMKM yang lebih akurat berdasarkan karakteristik serupa untuk meningkatkan daya saing mereka.
+        UMKM di Kecamatan Sampang, khususnya sektor perikanan, memiliki peran penting dalam mendukung perekonomian lokal. Namun, mereka menghadapi berbagai tantangan seperti keterbatasan permodalan, ketimpangan informasi pasar, dan belum optimalnya adaptasi terhadap teknologi. Pandemi COVID-19 memperparah kondisi dengan menurunnya omset dan gangguan distribusi hasil produksi. Untuk meningkatkan ketahanan dan daya saing UMKM, diperlukan pemetaan dan pengelompokan berbasis data riil. Data yang dikumpulkan mencakup variabel seperti jumlah pekerja, kapasitas produksi, omset, aset, dan surat izin. Namun, nilai-nilai pada data tersebut menunjukkan ketidakteraturan, seperti perbedaan skala yang ekstrem antar UMKM.
+        Sebagai contoh, terdapat UMKM dengan kapasitas produksi 100 liter namun memiliki aset hanya satu juta rupiah, sementara UMKM lain dengan kapasitas produksi sedikit lebih besar memiliki aset lima belas kali lipat. Ketidakseimbangan semacam ini membuat metode klasterisasi konvensional seperti K-Medoids kurang efektif karena tidak mampu menangani ambiguitas dan ketidakpastian data. Oleh karena itu, digunakan metode Fuzzy K-Medoids Type-2 yang memiliki kemampuan untuk menangani data dengan ketidakpastian tinggi, representasi keanggotaan ganda (fuzzy), dan ketahanan terhadap noise, sehingga lebih cocok untuk menghasilkan pengelompokan UMKM yang efisien dan bermanfaat dalam penyusunan strategi pengembangan yang tepat sasaran.
         """, unsafe_allow_html=True)
 
         # Subheader Metode Usulan
         st.markdown('<div class="custom-subheader">Metode Usulan</div>', unsafe_allow_html=True)
         st.markdown("""
-        Penelitian ini mengusulkan penggunaan **Fuzzy K-Medoids Type-2 Clustering**, yang menggabungkan kekuatan K-Medoids dan fleksibilitas Fuzzy Type-2 dalam menangani ketidakpastian dan variasi data UMKM. Metode ini memungkinkan pengelompokan yang lebih relevan dengan karakteristik dinamis UMKM. Untuk menentukan jumlah cluster optimal, digunakan metode **Partition Coefficient (PC)**, dan kualitas clustering dievaluasi dengan **Support Vector Machine (SVM)**.
+        Penelitian ini mengusulkan metode Fuzzy K-Medoids Type-2 Clustering, yang menggabungkan kekuatan K-Medoids dengan fleksibilitas Fuzzy Type-2 untuk menangani ketidakpastian dan variasi data UMKM, menghasilkan pengelompokan yang lebih relevan. Sebelum penerapan metode ini, penelitian mengikuti alur metodologis CRISP-DM (Cross-Industry Standard Process for Data Mining) yang terdiri dari tahapan-tahapan penting, dimulai dengan pemahaman bisnis untuk mengidentifikasi masalah dan tujuan penelitian. Selanjutnya, pemahaman data dilakukan untuk mengeksplorasi dan mempersiapkan data yang relevan dengan masalah yang ada. Dalam tahap persiapan data, data UMKM yang telah dikumpulkan akan dibersihkan dan diproses agar siap untuk dianalisis. Pada tahap selanjutnya, metode Fuzzy K-Medoids Type-2 diterapkan untuk melakukan clustering. Untuk menentukan jumlah cluster optimal, digunakan metode Partition Coefficient (PC), yang mengukur kekompakan data dalam cluster.
         """, unsafe_allow_html=True)
 
         # Subheader Pertanyaan Penelitian
         st.markdown('<div class="custom-subheader">Pertanyaan Penelitian</div>', unsafe_allow_html=True)
         st.markdown("""
-        1. Sejauh mana penerapan metode **Fuzzy K-Medoids Type-2** dapat meningkatkan akurasi pengelompokan UMKM di Kecamatan Sampang dibandingkan dengan metode **K-Medoids**?
-        2. Bagaimana hasil evaluasi menggunakan metode **Silhouette Coefficient (SC)** dan**Partition Coefficient (PC)** dalam menentukan jumlah cluster optimal untuk mengukur konsistensi dan relevansi cluster dalam pengelompokan UMKM di Kecamatan Sampang?
+        1. Sejauh mana penerapan metode Fuzzy K-Medoids Type-2 dapat meningkatkan akurasi pengelompokan UMKM di Kecamatan Sampang dibandingkan dengan metode K-Medoids?
+        2. Bagaimana hasil evaluasi menggunakan metode Silhouette Coefficient dibandingkan dengan Partition Coefficient dalam menentukan jumlah klaster optimal dalam pengelompokan UMKM di Kecamatan Sampang?
+        3. Bagaimana label hasil klaster yang terbentuk berdasarkan jumlah klaster optimal yang telah ditentukan?
         """, unsafe_allow_html=True)
 
         # Subheader Tujuan dan Manfaat
         st.markdown('<div class="custom-subheader">Tujuan dan Manfaat</div>', unsafe_allow_html=True)
         st.markdown("""
         **Tujuan**:
-        - Untuk mengevaluasi efektivitas penerapan metode **Fuzzy K-Medoids Type-2** dalam meningkatkan akurasi pengelompokan UMKM di Kecamatan Sampang, dengan membandingkannya dengan metode **K-Medoids**.
-        - Untuk menentukan jumlah cluster optimal dalam pengelompokan UMKM menggunakan metode **Silhouette Coefficient (SC)** dan **Partition Coefficient (PC)**.
+        1. Untuk mengevaluasi efektivitas penerapan metode Fuzzy K-Medoids Type-2 dalam meningkatkan akurasi pengelompokan UMKM di Kecamatan Sampang, dengan membandingkannya dengan metode K-Medoids.
+        2. Untuk menentukan jumlah klaster optimal dalam pengelompokan UMKM menggunakan perbandingan metode Silhouette Coefficient dan Partition Coefficient (PC).
+        3. Untuk menganalisis dan menginterpretasikan label hasil klaster berdasarkan jumlah klaster optimal yang telah ditentukan, sehingga dapat memberikan gambaran pola pengelompokan UMKM di Kecamatan Sampang.
 
         **Manfaat**:
-        - Memberikan wawasan lebih dalam mengenai pendekatan clustering yang fleksibel dan akurat untuk mengelompokkan UMKM di Kecamatan Sampang, yang dapat digunakan sebagai referensi dalam strategi pengembangan sektor UMKM.
-        - Menyediakan strategi segmentasi yang lebih tepat sasaran berdasarkan karakteristik UMKM di Kecamatan Sampang, yang dapat mendukung kebijakan dan program pemerintah dalam memperkuat daya saing dan ketahanan UMKM.
-        - Memberikan solusi berbasis data yang dapat diimplementasikan oleh pemerintah daerah dan pelaku usaha untuk merancang strategi pengembangan yang lebih efektif dan efisien sesuai dengan potensi dan kebutuhan masing-masing kelompok UMKM.
+        1. Memberikan wawasan lebih dalam mengenai pendekatan Clustering yang fleksibel dan efisien untuk mengelompokkan UMKM di Kecamatan Sampang, yang dapat digunakan sebagai referensi dalam strategi pengembangan sektor UMKM.
+        2. Menyediakan strategi segmentasi yang lebih tepat sasaran berdasarkan karakteristik UMKM di Kecamatan Sampang, yang dapat mendukung kebijakan dan program pemerintah dalam memperkuat daya saing dan ketahanan UMKM.
+        3. Memberikan solusi berbasis data yang dapat diimplementasikan oleh pemerintah daerah dan pelaku usaha untuk merancang strategi pengembangan yang lebih efektif dan efisien sesuai dengan potensi dan kebutuhan masing-masing kelompok UMKM.
         """, unsafe_allow_html=True)
 
         st.info("Silahkan lanjut ke tab **Upload File** untuk memulai analisis datamu")
@@ -346,7 +350,6 @@ with col2:
                         10: [527, 1019, 850, 300, 100, 700, 200, 400, 50, 600],
                     }
                 elif len(data_scaled) == 638:
-                    # Tentukan medoid untuk data 638 secara manual
                     manual_medoids = {
                         2: [200, 500],
                         3: [200, 400, 600],
@@ -408,13 +411,42 @@ with col2:
                     st.warning("⚠️ Tidak bisa menghitung Silhouette Score karena hanya satu cluster terbentuk.")
 
                 df_result = df_encoded.copy()
-                df_result['Cluster'] = labels
+                df_result['Cluster_KMedoids'] = labels + 1  # Shift cluster labels to start from 1
 
+                # Displaying Data per Cluster
                 st.markdown('<div class="custom-subheader">Data per Cluster</div>', unsafe_allow_html=True)
-                for i in range(k):
-                    st.markdown(f'<div class="cluster-header"> Cluster {i+1}</div>', unsafe_allow_html=True)
-                    st.dataframe(df_result[df_result['Cluster'] == i].reset_index(drop=True))
+                for i in range(1, k + 1):  # Start from 1 instead of 0
+                    st.markdown(f'<div class="cluster-header">Cluster {i}</div>', unsafe_allow_html=True)
+                    st.dataframe(df_result[df_result['Cluster_KMedoids'] == i].reset_index(drop=True))
 
+                # Provide download button for CSV
+                if st.button("Klik disini untuk mengunduh file Hasil Clustering"):
+                    # Restore original data (before normalization)
+                    df_original = st.session_state.df.copy()
+
+                    # Merge the original data with the clustering results
+                    df_cleaned = df_original.loc[df_result.index].copy()
+                    df_cleaned['Cluster_KMedoids'] = df_result['Cluster_KMedoids']
+
+                    # Select columns to be included in the final CSV
+                    final_columns = ['Nama Usaha', 'Jenis Usaha', 'Jumlah Pekerja', 'Kapasitas Produksi', 'Omset', 'Aset', 'Surat Izin', 'Cluster_KMedoids']
+                    df_for_download = df_cleaned[final_columns]
+
+                    # Save to CSV
+                    csv = df_for_download.to_csv(index=False).encode()
+
+                    # Create file in memory with BytesIO
+                    csv_file = io.BytesIO(csv)
+
+                    # Display download button
+                    st.download_button(
+                        label="Unduh Hasil Clustering (CSV)",
+                        data=csv_file,
+                        file_name="hasil_clustering_nonfuzzy.csv",
+                        mime="text/csv"
+                    )
+
+                # Provide button to visualize clustering result with t-SNE
                 if st.button("Tampilkan Grafik"):
                     tsne = TSNE(n_components=2, perplexity=30, random_state=42)
                     data_2d = tsne.fit_transform(data_scaled)
@@ -435,44 +467,39 @@ with col2:
                     ax.grid(True)
                     st.pyplot(fig)
 
-    
+
     elif selected_tab == "Fuzzy K-Medoids Type-2":
         if not st.session_state.normalisasi_diproses:
             st.warning("Silahkan lakukan normalisasi data **Normalisasi Data**")
         else:
             number_of_clusters = st.slider("Pilih Jumlah Cluster", min_value=2, max_value=10, value=2)
-            max_iter = st.slider("Pilih Maksimal Iterasi", min_value=5, max_value=20, value=20)
+            max_iter = st.slider("Pilih Maksimal Iterasi", min_value=5, max_value=30, value=30)
+
+            alpha = 0.05  # Set default alpha value
 
             if 'fuzzy_result' not in st.session_state:
                 st.session_state.fuzzy_result = None
 
             if st.button("Jalankan Proses Fuzzy K-Medoids Type-2"):
-                df_encoded = st.session_state.df_encoded.copy()
+                df_encoded = st.session_state.df_encoded.copy()  # Copy df_encoded
                 numerical_columns = ['Jumlah Pekerja', 'Kapasitas Produksi', 'Omset', 'Aset', 'Surat Izin_Ada', 'Surat Izin_Tidak Ada']
                 data_scaled = df_encoded[numerical_columns].values
 
                 m = 2
                 epsilon = 1e-5
 
-                # dist_matrix = pairwise_distances(data_scaled)
-                # max_dist_idx = np.unravel_index(np.argmax(dist_matrix), dist_matrix.shape)
-                # idx1, idx2 = max_dist_idx
-                # medoids = np.array([data_scaled[idx1], data_scaled[idx2]])[:number_of_clusters]
-
-                # st.success(f"Medoid awal diambil dari index {idx1} dan {idx2}")
-
                 # Tentukan medoid awal berdasarkan jumlah data
                 if len(data_scaled) == 1275:
                     medoid_indices = {
-                        2: [527, 1019],
-                        3: [527, 1019, 850],
-                        4: [527, 1019, 850, 300],
-                        5: [527, 1019, 850, 300, 100],
-                        6: [527, 1019, 850, 600, 300, 100],
-                        7: [527, 1019, 850, 700, 500, 300, 100],
-                        8: [527, 1019, 850, 700, 600, 400, 200, 100],
-                        9: [527, 1019, 850, 750, 650, 550, 450, 250, 100],
-                        10: [527, 1019, 850, 750, 650, 550, 450, 350, 250, 100],
+                        2: [55, 882],  
+                        3: [55, 882, 850],
+                        4: [55, 882, 850, 300],
+                        5: [55, 882, 850, 300, 100],
+                        6: [55, 882, 850, 600, 300, 100],
+                        7: [55, 882, 850, 700, 500, 300, 100],
+                        8: [55, 882, 850, 700, 600, 400, 200, 100],
+                        9: [55, 882, 850, 750, 650, 550, 450, 250, 100],
+                        10: [55, 882, 850, 750, 650, 550, 450, 350, 250, 100],
                     }.get(number_of_clusters, [0, len(data_scaled)//2])
                 elif len(data_scaled) == 638:
                     medoid_indices = {
@@ -492,22 +519,24 @@ with col2:
                 medoids = np.array([data_scaled[i] for i in medoid_indices])
                 st.success(f"Medoid awal diambil dari index: {medoid_indices}")
 
-
-                def compute_membership(data, medoids, m):
+                def compute_membership(data, medoids, m, alpha):
                     n_samples = len(data)
                     n_clusters = len(medoids)
                     lower = np.zeros((n_samples, n_clusters))
+                    middle = np.zeros((n_samples, n_clusters))
                     upper = np.zeros((n_samples, n_clusters))
 
                     for i in range(n_samples):
                         for j in range(n_clusters):
                             dist_ij = np.linalg.norm(data[i] - medoids[j]) + 1e-10
                             sum_ratio = sum([(dist_ij / (np.linalg.norm(data[i] - medoids[k]) + 1e-10)) ** (2 / (m - 1)) for k in range(n_clusters)])
-                            u_ij = 1 / sum_ratio
-                            lower[i][j] = max(0, u_ij - 0.05)
-                            upper[i][j] = min(1, u_ij + 0.05)
+                            u_ij = 1 / sum_ratio  # middle membership (type-1)
+                            middle[i][j] = u_ij
 
-                    return lower, upper
+                            lower[i][j] = max(0, u_ij - alpha * u_ij)
+                            upper[i][j] = min(1, u_ij + alpha * u_ij)
+
+                    return lower, middle, upper
 
                 progress_bar = st.progress(0)
                 status_text = st.empty()
@@ -515,7 +544,7 @@ with col2:
                 loss_per_iteration = []
 
                 for iteration in range(max_iter):
-                    lower, upper = compute_membership(data_scaled, medoids, m)
+                    lower, middle, upper = compute_membership(data_scaled, medoids, m, alpha)
 
                     new_medoids = []
                     total_cost = 0
@@ -527,7 +556,7 @@ with col2:
                         for candidate_idx in range(len(data_scaled)):
                             cost = 0
                             for i in range(len(data_scaled)):
-                                u_ij = (lower[i][j] + upper[i][j]) / 2
+                                u_ij = (lower[i][j] + 2 * middle[i][j] + upper[i][j]) / 4
                                 cost += (u_ij ** m) * np.linalg.norm(data_scaled[i] - data_scaled[candidate_idx]) ** 2
 
                             if cost < min_cost:
@@ -549,17 +578,30 @@ with col2:
 
                     medoids = new_medoids
 
-                cluster_result = np.argmax((lower + upper) / 2, axis=1)
+                membership_final = (lower + middle + upper) / 3
+                cluster_result = np.argmax(membership_final, axis=1)
                 df_encoded['Cluster_FuzzyType2'] = cluster_result
 
-                # Simpan lower dan upper
+                # Simpan lower, middle, upper di session_state
                 st.session_state.fuzzy_lower = lower
+                st.session_state.fuzzy_middle = middle
                 st.session_state.fuzzy_upper = upper
+
+                def partition_coefficient(lower, middle, upper):
+                    n_samples, n_clusters = lower.shape
+                    pc_sum = 0
+                    for i in range(n_samples):
+                        for j in range(n_clusters):
+                            u = (lower[i][j] + 2 * middle[i][j] + upper[i][j]) / 4
+                            pc_sum += u ** 2
+                    return pc_sum / n_samples
+
+                PC = partition_coefficient(lower, middle, upper)
 
                 st.session_state.fuzzy_result = {
                     'df_result': df_encoded,
                     'loss_per_iteration': loss_per_iteration,
-                    'partition_coefficient': sum(((lower[i][j] + upper[i][j]) / 2) ** 2 for i in range(len(lower)) for j in range(len(lower[0]))) / len(lower)
+                    'partition_coefficient': PC
                 }
 
             if st.session_state.fuzzy_result is not None:
@@ -568,6 +610,9 @@ with col2:
                 PC = st.session_state.fuzzy_result['partition_coefficient']
 
                 numerical_columns = ['Jumlah Pekerja', 'Kapasitas Produksi', 'Omset', 'Aset', 'Surat Izin_Ada', 'Surat Izin_Tidak Ada']
+
+                # Update cluster labels to start from 1 (instead of 0)
+                df_encoded['Cluster_FuzzyType2'] = df_encoded['Cluster_FuzzyType2'] + 1
 
                 st.markdown('<div class="custom-subheader">Data Hasil Cluster Fuzzy K-Medoids Type-2</div>', unsafe_allow_html=True)
                 st.dataframe(df_encoded)
@@ -587,11 +632,8 @@ with col2:
                 st.markdown('<div class="custom-subheader">Visualisasi Clustering dengan t-SNE</div>', unsafe_allow_html=True)
 
                 # Proses t-SNE
-                from sklearn.manifold import TSNE
-                import seaborn as sns
-
                 X = df_encoded[numerical_columns].values
-                tsne = TSNE(n_components=2, perplexity=30, n_iter_without_progress=1000, random_state=42)
+                tsne = TSNE(n_components=2, perplexity=30, n_iter=1000, random_state=42)
                 X_tsne = tsne.fit_transform(X)
 
                 df_encoded['TSNE-1'] = X_tsne[:, 0]
@@ -613,12 +655,43 @@ with col2:
                 ax.grid(True)
                 st.pyplot(fig)
 
-                st.markdown('<div class="custom-subheader">Data Per Cluster</div>', unsafe_allow_html=True)
-                for i in range(number_of_clusters):
-                    st.markdown(f'<div class="cluster-header"> Cluster {i+1}</div>', unsafe_allow_html=True)
-                    cluster_data = df_encoded[df_encoded['Cluster_FuzzyType2'] == i]
-                    st.dataframe(cluster_data.reset_index(drop=True))
+                # Display Data Per Cluster
+                st.markdown('<div class="custom-subheader">Unduh Hasil Cluster</div>', unsafe_allow_html=True)
 
+                # Modify for download: Adjust cluster labels and index starting from 1
+                df_original = st.session_state.df.copy()
+
+                df_cleaned = df_original.loc[df_encoded.index].copy()  # Match the indices
+                df_cleaned['Cluster_FuzzyType2'] = df_encoded['Cluster_FuzzyType2']
+
+                # Kembalikan kolom 'Surat Izin' ke bentuk semula
+                if 'Surat Izin_Ada' in df_cleaned.columns:
+                    df_cleaned['Surat Izin'] = df_cleaned.apply(
+                        lambda row: 'Ada' if row['Surat Izin_Ada'] == 1 else 'Tidak Ada', axis=1
+                    )
+
+                # Kembalikan kolom-kolom lainnya
+                df_cleaned['Nama Usaha'] = df_original['Nama Usaha'].values
+                df_cleaned['Jenis Usaha'] = df_original['Jenis Usaha'].values
+
+                # Pilih kolom akhir yang dibutuhkan
+                final_columns = ['Nama Usaha', 'Jenis Usaha', 'Jumlah Pekerja', 'Kapasitas Produksi',
+                                'Omset', 'Aset', 'Surat Izin', 'Cluster_FuzzyType2']
+                df_result = df_cleaned[final_columns]
+
+                # Save to CSV and provide download button
+                csv = df_result.to_csv(index=False).encode()
+
+                # Membuat objek file dalam memori dengan BytesIO
+                csv_file = io.BytesIO(csv)
+
+                # Tombol untuk mendownload file CSV
+                st.download_button(
+                    label="Unduh Hasil Clustering (CSV)",
+                    data=csv_file,
+                    file_name="hasil_clustering_fuzzy.csv",
+                    mime="text/csv"
+                )
 
     elif selected_tab == "Hasil Analisa":
         st.info("Silahkan upload file lokal (.csv, .xlsx, dll) atau masukkan link Google Drive / Spreadsheet")
@@ -707,7 +780,7 @@ with col2:
                 df_summary['Kategori UMKM'] = kategori_umkm
 
                 # Tampilkan tabel summary
-                st.markdown('<div class="custom-subheader">Analisa Cluster Berdasarkan SPK</div>', unsafe_allow_html=True)
+                st.markdown('<div class="custom-subheader">Analisa Cluster</div>', unsafe_allow_html=True)
                 st.dataframe(df_summary.set_index('Cluster'))
 
                 # Analisis tambahan berdasarkan kombinasi indikator
@@ -740,5 +813,3 @@ with col2:
 
     else:
         st.info("Silahkan unggah data terlebih dahulu melalui tab **Upload File**")
-
-    
